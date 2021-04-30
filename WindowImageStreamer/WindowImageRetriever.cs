@@ -34,6 +34,9 @@ namespace WindowImageStreamer
         /// <param name="area">Area of the target window to retrieve.</param>
         public WindowImageRetriever(IntPtr windowHandle, TargetArea area)
         {
+            //if (windowHandle == IntPtr.Zero)
+            //    throw new Exception();
+            //if (Enum.)
             TargetWindowHandle = windowHandle;
             Area = area;
         }
@@ -41,8 +44,21 @@ namespace WindowImageStreamer
         public bool TryGetWindowImage(out Bitmap bmp)
         {
             bmp = null;
-            if (!User32.GetWindowRect(TargetWindowHandle, out LPRect rect))
+            LPRect rect = default;
+            if (Area == TargetArea.EntireWindow) // Get EntireWindow rectangle
+            {
+                if (!User32.GetWindowRect(TargetWindowHandle, out rect))
+                    return false;
+            }
+            else // Get Client rectangle
+            {
+                if (!User32.GetClientRect(TargetWindowHandle, out rect))
+                    return false;
+            }
+
+            if (rect.Equals(default))
                 return false;
+
             bmp = new Bitmap(rect.right - rect.left, rect.bottom - rect.top, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using (Graphics gfxBmp = Graphics.FromImage(bmp))
             {

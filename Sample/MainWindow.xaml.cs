@@ -33,20 +33,43 @@ namespace Sample
         {
             base.OnSourceInitialized(e);
             // Provide hwnd value here from external
-            WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0086, TargetArea.OnlyClientArea);
+            {
+                WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0086, TargetArea.EntireWindow);
 
-            if (retriever.TryGetWindowImage(out Bitmap bmp))
-            {
-                Console.WriteLine();
-                bmp.Save("Example.bmp");
-            } 
-            else
-            {
-                Console.WriteLine();
+                {
+                    if (retriever.TryGetWindowImage(out Bitmap bmp))
+                    {
+                        Console.WriteLine();
+                        bmp.Save("entire.bmp");
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
+
+                    if (bmp != null)
+                        bmp.Dispose();
+                }
             }
 
-            if (bmp != null)
-                bmp.Dispose();
+            {
+                WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0086, TargetArea.OnlyClientArea);
+
+                {
+                    if (retriever.TryGetWindowImage(out Bitmap bmp))
+                    {
+                        Console.WriteLine();
+                        bmp.Save("client.bmp");
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
+
+                    if (bmp != null)
+                        bmp.Dispose();
+                }
+            }                       
         }
     }
 }

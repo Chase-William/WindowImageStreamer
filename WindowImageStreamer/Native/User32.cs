@@ -32,5 +32,12 @@ namespace WindowImageStreamer.Native
             IntPtr hwnd,
             out LPRect rect
         );
+
+        // Read Source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getclientrect
+        [DllImport(USER_32)]
+        public static extern bool GetClientRect(
+            IntPtr hwnd,
+            out LPRect rect
+        );
     }
 }
