@@ -34,7 +34,7 @@ namespace Sample
             base.OnSourceInitialized(e);
             // Provide hwnd value here from external
             {
-                WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0086, TargetArea.EntireWindow);
+                WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0086, TargetArea.OnlyClientArea);
 
                 {
                     if (retriever.TryGetWindowImage(out Bitmap bmp))

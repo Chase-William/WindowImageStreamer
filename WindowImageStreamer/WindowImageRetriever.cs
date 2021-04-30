@@ -34,13 +34,19 @@ namespace WindowImageStreamer
         /// <param name="area">Area of the target window to retrieve.</param>
         public WindowImageRetriever(IntPtr windowHandle, TargetArea area)
         {
-            //if (windowHandle == IntPtr.Zero)
-            //    throw new Exception();
-            //if (Enum.)
+            if (windowHandle == IntPtr.Zero)
+                throw new ArgumentNullException($"The parameter {nameof(windowHandle)} cannot be {IntPtr.Zero} or null.");           
+
             TargetWindowHandle = windowHandle;
             Area = area;
         }
 
+        /// <summary>
+        /// Tries to retrieve a bitmap of the target window's image. Uses the <see cref="Area"/> property to determine
+        /// which part of the target window should be captured.
+        /// </summary>
+        /// <param name="bmp">Resulting image of capture.</param>
+        /// <returns>Indication of success. True == successful, False == failure</returns>
         public bool TryGetWindowImage(out Bitmap bmp)
         {
             bmp = null;
