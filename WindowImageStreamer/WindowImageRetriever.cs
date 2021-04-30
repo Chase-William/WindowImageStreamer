@@ -4,20 +4,14 @@
 */
 
 using System;
-
-using WindowImageStreamer.EventArguments;
 using System.Drawing;
+
 using WindowImageStreamer.Native;
 
 namespace WindowImageStreamer
 {
     public class WindowImageRetriever
-    {
-        /// <summary>
-        /// Raised when a new image is received from the target window.
-        /// </summary>
-        public event EventHandler<WindowImageEventArgs> ImageReceived;
-
+    {        
         /// <summary>
         /// Gets the target window being retrieved.
         /// </summary>
@@ -45,7 +39,7 @@ namespace WindowImageStreamer
         /// Tries to retrieve a bitmap of the target window's image. Uses the <see cref="Area"/> property to determine
         /// which part of the target window should be captured.
         /// </summary>
-        /// <param name="bmp">Resulting image of capture.</param>
+        /// <param name="bmp">Resulting image of capture. Will be null if failure.</param>
         /// <returns>Indication of success. True == successful, False == failure</returns>
         public bool TryGetWindowImage(out Bitmap bmp)
         {
@@ -71,7 +65,11 @@ namespace WindowImageStreamer
                 IntPtr hdcBitmap = gfxBmp.GetHdc(); // Get handle to device context
                 
                 if (!User32.PrintWindow(TargetWindowHandle, hdcBitmap, (uint)Area))
+                {
+                    bmp.Dispose();
+                    bmp = null;
                     return false;
+                }
             }
             return true;
         }
