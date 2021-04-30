@@ -11,7 +11,7 @@ namespace WindowImageStreamer.Native
     /// <summary>
     /// Contains imported User32 functions.
     /// </summary>
-    public static class User32
+    internal static class User32
     {
         /// <summary>
         /// Target DLL for imported functions.

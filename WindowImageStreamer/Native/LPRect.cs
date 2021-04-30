@@ -8,7 +8,7 @@ using System.Text;
 namespace WindowImageStreamer.Native
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct LPRect
+    internal struct LPRect
     {
         public int left;
         public int top;
