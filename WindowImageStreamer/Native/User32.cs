@@ -11,7 +11,7 @@ namespace WindowImageStreamer.Native
     /// <summary>
     /// Contains imported User32 functions.
     /// </summary>
-    public static class User32
+    internal static class User32
     {
         /// <summary>
         /// Target DLL for imported functions.
@@ -21,9 +21,23 @@ namespace WindowImageStreamer.Native
         // Read Source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-printwindow
         [DllImport(USER_32)]
         public static extern bool PrintWindow(
-          IntPtr hwnd, // Target window handle
-          IntPtr hdcBlt, // Handle to bitmap
-          uint nFlags // Target options
+            IntPtr hwnd, // Target window handle
+            IntPtr hdcBlt, // Handle to bitmap
+            uint nFlags // Target options
+        );
+
+        // Read Source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrect
+        [DllImport(USER_32)]
+        public static extern bool GetWindowRect(
+            IntPtr hwnd,
+            out LPRect rect
+        );
+
+        // Read Source: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getclientrect
+        [DllImport(USER_32)]
+        public static extern bool GetClientRect(
+            IntPtr hwnd,
+            out LPRect rect
         );
     }
 }
