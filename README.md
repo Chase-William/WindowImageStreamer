@@ -4,7 +4,7 @@ A simple window streaming library for windows machines.
 
 ## Example Usage #1:
 
-`WindowImageRetriever` lets you request a bitmap of the target window whenever you like.
+`WindowImageRetriever` lets you request a bitmap from a target window.
 
 ```cs
 // WindowImageRetriever Example -- Provide your own window handle to target
@@ -30,7 +30,7 @@ Note: If `TryGetWindowImage` fails it will always return null for the bitmap.
 
 ### Example Usage #2:
 
-`WindowImageStreamer` lets you request a bitmap from a target window at a specified rate. The `WindowImageStreamer` class derives functionality from `WindowImageRetriever` it also provides the parent's functionalities.
+`WindowImageStreamer` lets you request a bitmap from a target window at a specified rate. The `WindowImageStreamer` class derives functionality from `WindowImageRetriever` so it also provides `WindowImageRetriever`'s functionalities.
 
 ```cs
 // WindowImageStreamer Example -- Provide your own window handle to target
