@@ -23,6 +23,7 @@ WindowImageRetriever retriever = new((IntPtr)0x003B0682, TargetArea.EntireWindow
     {
         // do something else...
     }
+    bmp?.Dispose();
 }
 ```
 
@@ -52,6 +53,9 @@ imgStreamer.ImageReceived += (sender, args) =>
         }); // Update View
     }
     catch (Exception ex) { }
+    finally {
+        bmp?.Dispose();
+    }
 };
 imgStreamer.ImageRetrievalError += delegate
 {
