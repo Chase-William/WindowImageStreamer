@@ -26,7 +26,7 @@ else
 }
 ```
 
-Note: If `TryGetWindowImage` fails the `Bitmap` will always be null.
+Note: If `TryGetWindowImage` fails the bitmap given will be null.
 
 ### Example Usage #2
 
