@@ -34,7 +34,7 @@ namespace Sample
         {
             base.OnSourceInitialized(e);
             { // WindowImageRetriever Example -- Provide your own window handle to target
-                WindowImageRetriever retriever = new((IntPtr)0x003B0682, TargetArea.EntireWindow);
+                var retriever = new WindowImageRetriever((IntPtr)0x02E90990, TargetArea.EntireWindow);
 
                 {
                     if (retriever.TryGetWindowImage(out Bitmap bmp))
@@ -54,16 +54,16 @@ namespace Sample
             }
 
             { // WindowImageStreamer Example -- Provide your own window handle to target
-                WindowImageStreamer imgStreamer = new((IntPtr)0x1036065C, TargetArea.OnlyClientArea, 500);
+                var imgStreamer = new WindowImageStreamer((IntPtr)0x02E90990, TargetArea.OnlyClientArea, 500);
                 imgStreamer.ImageReceived += (sender, args) =>
                 {
                     try
                     {
                         Dispatcher.Invoke(() =>
                         {
-                            using MemoryStream memStream = new();
+                            using var memStream = new MemoryStream();
                             args.Image.Save(memStream, System.Drawing.Imaging.ImageFormat.Bmp);
-                            BitmapImage bmpImg = new();
+                            var bmpImg = new BitmapImage();
                             bmpImg.BeginInit();
                             bmpImg.StreamSource = memStream;
                             bmpImg.CacheOption = BitmapCacheOption.OnLoad;
