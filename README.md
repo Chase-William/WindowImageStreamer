@@ -16,12 +16,14 @@ if (retriever.TryGetWindowImage(out Bitmap bmp))
         bmp.Save("entire.bmp");
     }
     catch (Exception ex) { }
+    finally {
+        bmp.Dispose();
+    }
 }
 else
 {
     // do something else...
 }
-bmp?.Dispose();
 ```
 
 Note: If `TryGetWindowImage` fails the `Bitmap` will always be null.
