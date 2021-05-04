@@ -67,4 +67,4 @@ imgStreamer.Start();
 You are responsible for disposing of the `Bitmap` when finished.
 
 ## Important Note
-The underlying method used to get the bitmap of the target window is the <a href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-printwindow">PrintWindow</a> function. It is important to note that this function relies on the target window's process to correctly render the window and return it and therefore may not always work correctly.
+The underlying method used to get the bitmap of the target window is the <a href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-printwindow" target="_blank">PrintWindow</a> function. It is important to note that this function relies on the target window's process to correctly render the window and return it and therefore may not always work correctly.
