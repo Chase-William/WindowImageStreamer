@@ -24,7 +24,7 @@ else
 bmp?.Dispose();
 ```
 
-Note: If `TryGetWindowImage` fails it will always return null for the bitmap.
+Note: If `TryGetWindowImage` fails the `Bitmap` will always be null.
 
 ### Example Usage #2
 
