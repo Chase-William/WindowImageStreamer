@@ -1,6 +1,6 @@
 # WindowImageStreamer
 
-A simple window streaming library for windows machines.
+A simple window bitmap streaming library for windows machines. Simply provide a handle to a window and start requesting bitmaps!
 
 ## Example Usage #1
 
@@ -9,22 +9,19 @@ A simple window streaming library for windows machines.
 ```cs
 // WindowImageRetriever Example -- Provide your own window handle to target
 WindowImageRetriever retriever = new((IntPtr)0x003B0682, TargetArea.EntireWindow);
-
+if (retriever.TryGetWindowImage(out Bitmap bmp))
 {
-    if (retriever.TryGetWindowImage(out Bitmap bmp))
+    try
     {
-        try
-        {
-            bmp.Save("entire.bmp");
-        }
-        catch (Exception ex) { }
+        bmp.Save("entire.bmp");
     }
-    else
-    {
-        // do something else...
-    }
-    bmp?.Dispose();
+    catch (Exception ex) { }
 }
+else
+{
+    // do something else...
+}
+bmp?.Dispose();
 ```
 
 Note: If `TryGetWindowImage` fails it will always return null for the bitmap.
