@@ -2,7 +2,7 @@
 
 A simple window streaming library for windows machines.
 
-## Example Usage #1:
+## Example Usage #1
 
 `WindowImageRetriever` lets you request a bitmap from a target window.
 
@@ -29,7 +29,7 @@ WindowImageRetriever retriever = new((IntPtr)0x003B0682, TargetArea.EntireWindow
 
 Note: If `TryGetWindowImage` fails it will always return null for the bitmap.
 
-### Example Usage #2:
+### Example Usage #2
 
 `WindowImageStreamer` lets you request a bitmap from a target window at a specified rate. The `WindowImageStreamer` class derives functionality from `WindowImageRetriever` so it also provides `WindowImageRetriever`'s functionalities.
 
@@ -63,3 +63,6 @@ imgStreamer.ImageRetrievalError += delegate
 };
 imgStreamer.Start();
 ```
+
+## Cleaning Up
+You are responsible for disposing of the `Bitmap` when finished.
