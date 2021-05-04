@@ -18,9 +18,15 @@ namespace WIS
     public class WindowImageStreamer : WindowImageRetriever
     {
         /// <summary>
-        /// Raised when a new image is received from the target window.
+        /// Raised when a new image is received from the target window. 
+        /// This event will not fire when retrieval of the bitmap from the target window fails.
+        /// Subscribe to <see cref="ImageRetrievalError"/> to be notified of these failures.
         /// </summary>
         public event EventHandler<WindowImageEventArgs> ImageReceived;
+        /// <summary>
+        /// Raised when a new bitmap was requested and null was received.
+        /// </summary>
+        public event EventHandler ImageRetrievalError;
 
         private readonly Timer timer;
 
@@ -56,8 +62,13 @@ namespace WIS
         /// <param name="e"></param>
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            TryGetWindowImage(out Bitmap bmp);       
+            if (!TryGetWindowImage(out Bitmap bmp))
+            {   // Notify error
+                ImageRetrievalError?.Invoke(this, EventArgs.Empty);
+                return;
+            }
             ImageReceived?.Invoke(this, new WindowImageEventArgs(TargetWindowHandle, bmp));
+            bmp.Dispose();
         }
     }    
 }

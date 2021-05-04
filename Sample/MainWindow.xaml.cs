@@ -37,31 +37,30 @@ namespace Sample
 
 
             { // WindowImageRetriever Example -- Provide your own window handle to target
-                WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0682, TargetArea.EntireWindow);
+                WindowImageRetriever retriever = new((IntPtr)0x003B0682, TargetArea.EntireWindow);
 
                 {
                     if (retriever.TryGetWindowImage(out Bitmap bmp))
                     {
-                        Console.WriteLine();
-                        bmp.Save("entire.bmp");
+                        try
+                        {
+                            bmp.Save("entire.bmp");
+                        }
+                        catch (Exception ex) { }
                     }
                     else
                     {
-                        Console.WriteLine();
+                        // do something else...
                     }
-
-                    if (bmp != null)
-                        bmp.Dispose();
                 }
             }
 
             { // WindowImageStreamer Example -- Provide your own window handle to target
-                WindowImageStreamer imgStreamer = new WindowImageStreamer((IntPtr)0x1036065C, TargetArea.OnlyClientArea, 100);                
+                WindowImageStreamer imgStreamer = new((IntPtr)0x1036065C, TargetArea.OnlyClientArea, 500);
                 imgStreamer.ImageReceived += (sender, args) =>
                 {
                     try
                     {
-
                         Dispatcher.Invoke(() =>
                         {
                             using MemoryStream memStream = new();
@@ -73,15 +72,12 @@ namespace Sample
                             bmpImg.EndInit();
                             imgView.Source = bmpImg;
                         }); // Update View
-                    }                    
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
                     }
-                    finally
-                    {
-                        args.Image.Dispose();
-                    }                    
+                    catch (Exception ex) { }
+                };
+                imgStreamer.ImageRetrievalError += delegate
+                {
+                    MessageBox.Show("WindowImageStreamer was unable to retrieve a bitmap from the target window.");
                 };
                 imgStreamer.Start();
             }
