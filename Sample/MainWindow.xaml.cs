@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using WindowImageStreamer;
+using WIS;
 
 namespace Sample
 {
@@ -33,8 +34,10 @@ namespace Sample
         {
             base.OnSourceInitialized(e);
             // Provide hwnd value here from external
-            {
-                WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0086, TargetArea.OnlyClientArea);
+
+
+            { // WindowImageRetriever Example -- Provide your own window handle to target
+                WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0682, TargetArea.EntireWindow);
 
                 {
                     if (retriever.TryGetWindowImage(out Bitmap bmp))
@@ -52,24 +55,36 @@ namespace Sample
                 }
             }
 
-            {
-                WindowImageRetriever retriever = new WindowImageRetriever((IntPtr)0x003B0086, TargetArea.OnlyClientArea);
-
+            { // WindowImageStreamer Example -- Provide your own window handle to target
+                WindowImageStreamer imgStreamer = new WindowImageStreamer((IntPtr)0x1036065C, TargetArea.OnlyClientArea, 100);                
+                imgStreamer.ImageReceived += (sender, args) =>
                 {
-                    if (retriever.TryGetWindowImage(out Bitmap bmp))
+                    try
                     {
-                        Console.WriteLine();
-                        bmp.Save("client.bmp");
-                    }
-                    else
-                    {
-                        Console.WriteLine();
-                    }
 
-                    if (bmp != null)
-                        bmp.Dispose();
-                }
-            }                       
+                        Dispatcher.Invoke(() =>
+                        {
+                            using MemoryStream memStream = new();
+                            args.Image.Save(memStream, System.Drawing.Imaging.ImageFormat.Bmp);
+                            BitmapImage bmpImg = new();
+                            bmpImg.BeginInit();
+                            bmpImg.StreamSource = memStream;
+                            bmpImg.CacheOption = BitmapCacheOption.OnLoad;
+                            bmpImg.EndInit();
+                            imgView.Source = bmpImg;
+                        }); // Update View
+                    }                    
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    finally
+                    {
+                        args.Image.Dispose();
+                    }                    
+                };
+                imgStreamer.Start();
+            }
         }
     }
 }

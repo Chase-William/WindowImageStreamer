@@ -6,7 +6,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WindowImageStreamer.Native
+namespace WIS.Native
 {
     /// <summary>
     /// Contains imported User32 functions.

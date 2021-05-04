@@ -5,7 +5,7 @@ using System.Text;
 
 
 
-namespace WindowImageStreamer.Native
+namespace WIS.Native
 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct LPRect

@@ -7,11 +7,14 @@ using System;
 using System.Timers;
 using HWND = System.IntPtr;
 
-using WindowImageStreamer.EventArguments;
+using WIS.EventArguments;
 using System.Drawing;
 
-namespace WindowImageStreamer
+namespace WIS
 {
+    /// <summary>
+    /// A <see cref="WindowImageStreamer"/> class for retrieving bitmaps from a target window at a specified rate.
+    /// </summary>
     public class WindowImageStreamer : WindowImageRetriever
     {
         /// <summary>
@@ -21,11 +24,30 @@ namespace WindowImageStreamer
 
         private readonly Timer timer;
 
-        public WindowImageStreamer(HWND windowHandle, TargetArea area, uint milliFrequency) : base(windowHandle, area)
+        public WindowImageStreamer(HWND windowHandle, TargetArea area, double milliFrequency) : base(windowHandle, area)
         {
             timer = new Timer(milliFrequency);
             timer.Elapsed += Timer_Elapsed;
         }
+
+        /// <summary>
+        /// Gets and sets the interval to retrieve the bitmaps at.
+        /// </summary>
+        public double Interval
+        {
+            get => timer.Interval;
+            set => timer.Interval = value;
+        }
+
+        /// <summary>
+        /// Starts streaming the window.
+        /// </summary>
+        public void Start() => timer.Start();
+
+        /// <summary>
+        /// Stops streaming the window.
+        /// </summary>
+        public void Stop() => timer.Stop();     
 
         /// <summary>
         /// Raises the <see cref="ImageReceived"/> event when an image is polled from the target window.

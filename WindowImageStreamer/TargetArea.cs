@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See repository root directory for more info.
 */
 
-namespace WindowImageStreamer
+namespace WIS
 {
     /// <summary>
     /// The area of a window to retrieve.

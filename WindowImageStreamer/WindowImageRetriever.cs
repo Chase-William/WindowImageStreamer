@@ -6,10 +6,13 @@
 using System;
 using System.Drawing;
 
-using WindowImageStreamer.Native;
+using WIS.Native;
 
-namespace WindowImageStreamer
+namespace WIS
 {
+    /// <summary>
+    /// A <see cref="WindowImageRetriever"/> class for retrieving bitmaps from a target window.
+    /// </summary>
     public class WindowImageRetriever
     {        
         /// <summary>
@@ -58,7 +61,7 @@ namespace WindowImageStreamer
 
             if (rect.Equals(default))
                 return false;
-
+            // Create a new bitmap to fill with the proper dimensions
             bmp = new Bitmap(rect.right - rect.left, rect.bottom - rect.top, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using (Graphics gfxBmp = Graphics.FromImage(bmp))
             {
@@ -66,7 +69,7 @@ namespace WindowImageStreamer
                 
                 if (!User32.PrintWindow(TargetWindowHandle, hdcBitmap, (uint)Area))
                 {
-                    bmp.Dispose();
+                    bmp.Dispose(); // Clean-up right away if failure
                     bmp = null;
                     return false;
                 }
