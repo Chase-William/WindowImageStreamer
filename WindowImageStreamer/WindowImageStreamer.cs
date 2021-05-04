@@ -68,7 +68,6 @@ namespace WIS
                 return;
             }
             ImageReceived?.Invoke(this, new WindowImageEventArgs(TargetWindowHandle, bmp));
-            bmp.Dispose();
         }
     }    
 }

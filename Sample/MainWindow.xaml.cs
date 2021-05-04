@@ -33,9 +33,6 @@ namespace Sample
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            // Provide hwnd value here from external
-
-
             { // WindowImageRetriever Example -- Provide your own window handle to target
                 WindowImageRetriever retriever = new((IntPtr)0x003B0682, TargetArea.EntireWindow);
 
@@ -52,6 +49,7 @@ namespace Sample
                     {
                         // do something else...
                     }
+                    bmp?.Dispose();
                 }
             }
 
@@ -74,6 +72,10 @@ namespace Sample
                         }); // Update View
                     }
                     catch (Exception ex) { }
+                    finally
+                    {
+                        args.Image?.Dispose();
+                    }
                 };
                 imgStreamer.ImageRetrievalError += delegate
                 {
