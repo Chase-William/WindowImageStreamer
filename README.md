@@ -8,7 +8,7 @@ A simple window bitmap streaming library for windows machines. Simply provide a 
 
 ```cs
 // WindowImageRetriever Example -- Provide your own window handle to target
-WindowImageRetriever retriever = new((IntPtr)0x003B0682, TargetArea.EntireWindow);
+var retriever = new WindowImageRetriever((IntPtr)0x003B0682, TargetArea.EntireWindow);
 if (retriever.TryGetWindowImage(out Bitmap bmp))
 {
     try
@@ -34,16 +34,16 @@ Note: If `TryGetWindowImage` fails the bitmap given will be null.
 
 ```cs
 // WindowImageStreamer Example -- Provide your own window handle to target
-WindowImageStreamer imgStreamer = new((IntPtr)0x1036065C, TargetArea.OnlyClientArea, 500);
+var imgStreamer = new WindowImageStreamer((IntPtr)0x1036065C, TargetArea.OnlyClientArea, 500);
 imgStreamer.ImageReceived += (sender, args) =>
 {
     try
     {
         Dispatcher.Invoke(() =>
         {
-            using MemoryStream memStream = new();
+            using var memStream = new MemoryStream();
             args.Image.Save(memStream, System.Drawing.Imaging.ImageFormat.Bmp);
-            BitmapImage bmpImg = new();
+            var bmpImg = new BitmapImage();
             bmpImg.BeginInit();
             bmpImg.StreamSource = memStream;
             bmpImg.CacheOption = BitmapCacheOption.OnLoad;
