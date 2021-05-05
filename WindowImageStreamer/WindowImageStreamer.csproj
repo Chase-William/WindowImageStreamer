@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>WindowImageStreamer</PackageId>
+    <Version>1.0.0</Version>
+    <PackageProjectUrl>https://github.com/ChaseRoth/WindowImageStreamer</PackageProjectUrl>
+    <Authors>Chase Roth</Authors>
+    <Company>N/A</Company>
+    <PackageTags>WindowStream ImageStream WindowImage WindowBitmap Win32 Bitmap Image Window Stream</PackageTags>
+    <Description>A simple window bitmap streaming library for windows machines. Simply provide a handle to a window and start requesting bitmaps!</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright (c) Chase Roth cxr6988@rit.edu</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
