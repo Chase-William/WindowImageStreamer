@@ -1,4 +1,4 @@
-# WindowImageStreamer
+# WindowImageStreamer [![nuget](https://img.shields.io/badge/Nuget-v1.0-informational)](https://www.nuget.org/packages/WindowImageStreamer/)
 
 A simple window bitmap streaming library for windows machines. Simply provide a handle to a window and start requesting bitmaps!
 
